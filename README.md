@@ -1,4 +1,4 @@
-# codemass [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/vincentriemer/codemass)
+# codeweight [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/vincentriemer/codeweight)
 
 Github repository badges for the filesize of your client-side library.
 
@@ -16,21 +16,21 @@ Take the url...
 https://github.com/julianshapiro/velocity/blob/master/velocity.min.js
 ```
 
-...and replace the `https://github.com` with `http://codemass.herokuapp.com`. Your URL should now look like...
+...and replace the `https://github.com` with `http://codeweight.herokuapp.com`. Your URL should now look like...
 
 ```
-http://codemass.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js
+http://codeweight.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js
 ```
 
 Finally, when you use the above link as the source of an image this should be the result:
 
-![VelocityJS Size](http://codemass.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js)
+![VelocityJS Size](http://codeweight.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js)
 
 Just put that image in your README and it should automatically update whenever the size of the file changes!
 
 ## Special Thanks
 
-I'd just like to thank [Github](https://github.com) and [Shields.io](http://shields.io) as this service wouldn't exist without their APIs.
+Thank you [Github](https://github.com) and [Shields.io](http://shields.io) as this service wouldn't exist without your awesome APIs!
 
 ## License
 
