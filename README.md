@@ -1,6 +1,4 @@
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/vincentriemer/codemass)
-
-# codemass
+# codemass [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/vincentriemer/codemass)
 
 Github repository badges for the filesize of your client-side library.
 
@@ -14,13 +12,17 @@ Next, you're going to want to grab the url of the file you've navigated to (be s
 
 Take the url...
 
-`https://github.com/julianshapiro/velocity/blob/master/velocity.min.js`
+```
+https://github.com/julianshapiro/velocity/blob/master/velocity.min.js
+```
 
-...and replace the `https://github.com` with `http://codemass.herokuapp.com` which now looks like...
+...and replace the `https://github.com` with `http://codemass.herokuapp.com`. Your URL should now look like...
 
-`http://codemass.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js`
+```
+http://codemass.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js
+```
 
-Finally, when used as the source of an image the new link should render like this:
+Finally, when you use the above link as the source of an image this should be the result:
 
 ![VelocityJS Size](http://codemass.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js)
 
