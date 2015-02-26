@@ -1,0 +1,25 @@
+{
+  "name": "codemass.io",
+  "version": "0.1.0",
+  "description": "Repository badges for the sizes of your files.",
+  "main": "index.js",
+  "engines": {
+    "iojs": "1.3.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Vincent Riemer",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^0.18.0",
+    "koa-logger": "^1.2.2",
+    "koa-router": "^4.2.0",
+    "request-promise": "^0.4.0"
+  },
+  "keywords": [
+    "shield.io",
+    "badges",
+    "size"
+  ]
+}
