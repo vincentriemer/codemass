@@ -1,5 +1,5 @@
 {
-  "name": "codemass",
+  "name": "codeweight",
   "version": "0.1.0",
   "description": "Github repository badges for the filesize of your client-side library.",
   "main": "index.js",
@@ -9,12 +9,17 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Vincent Riemer",
+  "author": {
+    "name": "Vincent Riemer",
+    "email": "vincentriemer@gmail.com",
+    "url": "http://vincentriemer.com"
+  },
   "license": "MIT",
   "dependencies": {
     "koa": "^0.18.0",
     "koa-logger": "^1.2.2",
     "koa-router": "^4.2.0",
+    "newrelic": "^1.17.0",
     "request-promise": "^0.4.0"
   },
   "keywords": [
@@ -22,8 +27,13 @@
     "badges",
     "filesize"
   ],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/vincentriemer/codemass"
+  "homepage": "https://github.com/vincentriemer/codeweight",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincentriemer/codeweight"
+  },
+  "bugs": {
+    "url": "https://github.com/vincentriemer/codeweight/issues",
+    "email": "vincentriemer+codeweight@gmail.com"
   }
 }

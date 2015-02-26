@@ -16,15 +16,15 @@ Take the url...
 https://github.com/julianshapiro/velocity/blob/master/velocity.min.js
 ```
 
-...and replace the `https://github.com` with `http://codeweight.herokuapp.com`. Your URL should now look like...
+...and replace the `https://github.com` with `http://codeweight.io`. Your URL should now look like...
 
 ```
-http://codeweight.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js
+http://codeweight.io/julianshapiro/velocity/blob/master/velocity.min.js
 ```
 
 Finally, when you use the above link as the source of an image this should be the result:
 
-![VelocityJS Size](http://codeweight.herokuapp.com/julianshapiro/velocity/blob/master/velocity.min.js)
+![VelocityJS Size](http://codeweight.io/julianshapiro/velocity/blob/master/velocity.min.js)
 
 Just put that image in your README and it should automatically update whenever the size of the file changes!
 
