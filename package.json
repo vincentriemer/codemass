@@ -1,7 +1,7 @@
 {
   "name": "codemass",
   "version": "0.1.0",
-  "description": "Repository badges for the sizes of your files.",
+  "description": "Github repository badges for the filesize of your client-side library.",
   "main": "index.js",
   "engines": {
     "iojs": "1.3.0"
@@ -20,6 +20,10 @@
   "keywords": [
     "shield.io",
     "badges",
-    "size"
-  ]
+    "filesize"
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/vincentriemer/codemass"
+  }
 }
