@@ -1,4 +1,6 @@
 'use strict';
+require('newrelic');
+
 var koa = require('koa');
 var router = require('koa-router')();
 var rp = require('request-promise');
