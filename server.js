@@ -16,8 +16,11 @@ var app = koa();
 var redis;
 if (process.env.REDISTOGO_URL) {
   var rtg = require("url").parse(process.env.REDISTOGO_URL);
-  redis = require("then-redis").createClient(rtg.port, rtg.hostname);
-  redis.auth(rtg.auth.split(":")[1]);
+  redis = require("then-redis").createClient({
+    port: rtg.port,
+    host: rtg.hostname,
+    password: rtg.auth.split(":")[1]
+  });
 } else {
   redis = require('then-redis').createClient();
 }
