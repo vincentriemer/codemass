@@ -1,5 +1,6 @@
 // New Relic App Monitoring
 if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
+  console.log("NewRelic key detected, activating NewRelic support...");
   require('newrelic');
 }
 
@@ -22,12 +23,13 @@ if (process.env.REDISTOGO_URL) {
     password: rtg.auth.split(":")[1]
   });
 } else {
+  console.log('No Redistogo detected, configuring with local redis server...');
   redis = require('then-redis').createClient();
 }
 
 // Constants
 var GITHUB_API_BASE_URL = 'https://api.github.com';
-var CACHE_EXPIRATION_TIME = 21600;
+var CACHE_EXPIRATION_TIME = process.env.CACHE_EXP || 21600;
 var GITHUB_CLIENT = process.env.CODEWEIGHT_GITHUB_CLIENT;
 var GITHUB_SECRET = process.env.CODEWEIGHT_GITHUB_SECRET;
 
@@ -74,6 +76,7 @@ router.get(/^\/([\w\-]*){1}\/([\w\-]*){1}\/blob\/([\w\-]*){1}\/(.*){1}$/i, funct
 
   var shieldResult = yield getBadge(username, repo, path);
 
+  this.set('Cache-Control', 'no-cache');
   this.response.type = 'image/svg+xml';
   this.response.body = shieldResult;
 });
