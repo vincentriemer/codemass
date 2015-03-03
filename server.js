@@ -8,30 +8,13 @@ if (process.env.NEW_RELIC_LICENSE_KEY && process.env.NEW_RELIC_APP_NAME) {
 var koa = require('koa'),
   router = require('koa-router')(),
   rp = require('request-promise'),
-  logger = require('koa-logger'),
-  cache = require('koa-cash');
+  logger = require('koa-logger');
 
 // App initializations
 var app = koa();
 
-var redis;
-if (process.env.REDISTOGO_URL) {
-  var rtg = require("url").parse(process.env.REDISTOGO_URL);
-  redis = require("then-redis").createClient({
-    port: rtg.port,
-    host: rtg.hostname,
-    password: rtg.auth.split(":")[1]
-  });
-} else {
-  console.log('No Redistogo detected, configuring with local redis server...');
-  redis = require('then-redis').createClient();
-}
-
-redis.flushall();
-
 // Constants
 var GITHUB_API_BASE_URL = 'https://api.github.com';
-var CACHE_EXPIRATION_TIME = parseInt(process.env.CACHE_EXP) || 600;
 var GITHUB_CLIENT = process.env.CODEWEIGHT_GITHUB_CLIENT;
 var GITHUB_SECRET = process.env.CODEWEIGHT_GITHUB_SECRET;
 
@@ -57,19 +40,8 @@ var getBadge = function *(username, repo, path) {
   return yield rp(shieldTarget).then(function (response) {return response;});
 };
 
-var cacheGet = function*(key) {
-  return JSON.parse(yield redis.get(key));
-};
-
-var cacheSet = function* (key, value) {
-  redis.setex(key, CACHE_EXPIRATION_TIME, JSON.stringify(value));
-};
-
-
 // Routing
 router.get(/^\/([\w\-]*){1}\/([\w\-]*){1}\/blob\/([\w\-]*){1}\/(.*){1}$/i, function *(next) {
-
-  if (yield* this.cashed()) return;
 
   var username = this.captures[0],
     repo = this.captures[1],
@@ -85,10 +57,6 @@ router.get(/^\/([\w\-]*){1}\/([\w\-]*){1}\/blob\/([\w\-]*){1}\/(.*){1}$/i, funct
 
 // Middleware
 app.use(logger());
-app.use(cache({
-  get: cacheGet,
-  set: cacheSet
-}));
 app.use(router.routes());
 
 // Starting the server
