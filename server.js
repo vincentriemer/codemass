@@ -27,9 +27,11 @@ if (process.env.REDISTOGO_URL) {
   redis = require('then-redis').createClient();
 }
 
+redis.flushall();
+
 // Constants
 var GITHUB_API_BASE_URL = 'https://api.github.com';
-var CACHE_EXPIRATION_TIME = process.env.CACHE_EXP || 600;
+var CACHE_EXPIRATION_TIME = parseInt(process.env.CACHE_EXP) || 600;
 var GITHUB_CLIENT = process.env.CODEWEIGHT_GITHUB_CLIENT;
 var GITHUB_SECRET = process.env.CODEWEIGHT_GITHUB_SECRET;
 
