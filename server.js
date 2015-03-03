@@ -29,7 +29,7 @@ if (process.env.REDISTOGO_URL) {
 
 // Constants
 var GITHUB_API_BASE_URL = 'https://api.github.com';
-var CACHE_EXPIRATION_TIME = process.env.CACHE_EXP || 21600;
+var CACHE_EXPIRATION_TIME = process.env.CACHE_EXP || 600;
 var GITHUB_CLIENT = process.env.CODEWEIGHT_GITHUB_CLIENT;
 var GITHUB_SECRET = process.env.CODEWEIGHT_GITHUB_SECRET;
 
@@ -76,7 +76,7 @@ router.get(/^\/([\w\-]*){1}\/([\w\-]*){1}\/blob\/([\w\-]*){1}\/(.*){1}$/i, funct
 
   var shieldResult = yield getBadge(username, repo, path);
 
-  this.set('Cache-Control', 'no-cache');
+  this.set('Cache-Control', 'no-cache, no-store');
   this.response.type = 'image/svg+xml';
   this.response.body = shieldResult;
 });
