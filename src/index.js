@@ -1,7 +1,7 @@
 import configLoader from './config-loader';
 import checkSize from './codeweight';
 
-export default function(configPath) {
+module.exports = function(configPath) {
   const config = configLoader(configPath);
 
   if (config == null) {
@@ -9,4 +9,4 @@ export default function(configPath) {
   }
 
   checkSize(config);
-}
+};
