@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vincentriemer/check-size.git"
+    "url": "https://github.com/vincentriemer/codeweight.git"
   },
   "author": "Vincent Riemer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vincentriemer/check-size/issues"
+    "url": "https://github.com/vincentriemer/codeweight/issues"
   },
-  "homepage": "https://github.com/vincentriemer/check-size#readme",
+  "homepage": "https://github.com/vincentriemer/codeweight#readme",
   "devDependencies": {
     "babel-cli": "^6.4.0",
     "babel-plugin-transform-runtime": "^6.4.0",
