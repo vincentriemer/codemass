@@ -13,6 +13,10 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
@@ -98,6 +102,10 @@ function serializeResult(_ref) {
   return [name, sizeRaw(fsBytes), sizePercent(fsBytes, branchBytes), sizeDiff(fsBytes, branchBytes)];
 }
 
+function calculateBytes(contentsArray) {
+  return contentsArray.map(Buffer.byteLength);
+}
+
 function processFile(branch) {
   return function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
@@ -106,7 +114,9 @@ function processFile(branch) {
       var gzip = _ref2$gzip === undefined ? false : _ref2$gzip;
       var _ref2$name = _ref2.name;
       var name = _ref2$name === undefined ? path : _ref2$name;
-      var topLevel, fsContent, branchContent, fsGzipContent, branchGzipContent, fsBytes, branchBytes;
+
+      var topLevel, fsContent, branchContent, fsGzipContent, branchGzipContent, _calculateBytes, _calculateBytes2, fsBytes, branchBytes, _calculateBytes3, _calculateBytes4;
+
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -128,7 +138,7 @@ function processFile(branch) {
               branchContent = _context.sent;
 
               if (!gzip) {
-                _context.next = 21;
+                _context.next = 23;
                 break;
               }
 
@@ -142,19 +152,20 @@ function processFile(branch) {
 
             case 15:
               branchGzipContent = _context.sent;
-
-              // calcaulate bytes
-              fsBytes = Buffer.byteLength(fsGzipContent);
-              branchBytes = Buffer.byteLength(branchGzipContent);
+              _calculateBytes = calculateBytes([fsGzipContent, branchGzipContent]);
+              _calculateBytes2 = (0, _slicedToArray3.default)(_calculateBytes, 2);
+              fsBytes = _calculateBytes2[0];
+              branchBytes = _calculateBytes2[1];
               return _context.abrupt('return', { name: name + ' (gizpped)', fsBytes: fsBytes, branchBytes: branchBytes });
 
-            case 21:
-              // calculate bytes
-              fsBytes = Buffer.byteLength(fsContent);
-              branchBytes = Buffer.byteLength(branchContent);
+            case 23:
+              _calculateBytes3 = calculateBytes([fsContent, branchContent]);
+              _calculateBytes4 = (0, _slicedToArray3.default)(_calculateBytes3, 2);
+              fsBytes = _calculateBytes4[0];
+              branchBytes = _calculateBytes4[1];
               return _context.abrupt('return', { name: name, fsBytes: fsBytes, branchBytes: branchBytes });
 
-            case 24:
+            case 28:
             case 'end':
               return _context.stop();
           }

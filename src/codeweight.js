@@ -59,6 +59,10 @@ function serializeResult({name, fsBytes, branchBytes}) {
   return [name, sizeRaw(fsBytes), sizePercent(fsBytes, branchBytes), sizeDiff(fsBytes, branchBytes)];
 }
 
+function calculateBytes(contentsArray) {
+  return contentsArray.map(Buffer.byteLength);
+}
+
 function processFile (branch) {
   return async function({path, gzip = false, name = path}) {
     // get git toplevel
@@ -75,15 +79,11 @@ function processFile (branch) {
       const fsGzipContent = await promisedGzip(fsContent);
       const branchGzipContent = await promisedGzip(branchContent);
 
-      // calcaulate bytes
-      const fsBytes = Buffer.byteLength(fsGzipContent);
-      const branchBytes = Buffer.byteLength(branchGzipContent);
+      const [fsBytes, branchBytes] = calculateBytes([fsGzipContent, branchGzipContent]);
 
       return { name: `${name} (gizpped)`, fsBytes, branchBytes };
     } else {
-      // calculate bytes
-      const fsBytes = Buffer.byteLength(fsContent);
-      const branchBytes = Buffer.byteLength(branchContent);
+      const [fsBytes, branchBytes] = calculateBytes([fsContent, branchContent]);
 
       return {name, fsBytes, branchBytes};
     }

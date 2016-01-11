@@ -70,6 +70,12 @@
         },
         {
           "path": "dist/index.js"
+        },
+        {
+          "path": "dist/codeweight.js"
+        },
+        {
+          "path": "dist/cli.js"
         }
       ]
     }
