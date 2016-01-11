@@ -1,9 +1,4 @@
 #!/usr/bin/env node
-
-/**
- * Created by vincentriemer on 1/10/16.
- */
-
 import cli from 'commander';
 import { red, yellow } from 'colors/safe';
 

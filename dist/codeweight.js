@@ -45,9 +45,7 @@ var _utilities = require('./utilities');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var git = (0, _simpleGit2.default)(); /**
-                                       * Created by vincentriemer on 1/10/16.
-                                       */
+var git = (0, _simpleGit2.default)();
 
 var promisedShow = _bluebird2.default.promisify(git.show, { context: git });
 var promisedRevParse = _bluebird2.default.promisify(git.revparse, { context: git });

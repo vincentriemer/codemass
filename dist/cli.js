@@ -15,10 +15,6 @@ var _codeweight = require('./codeweight');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Created by vincentriemer on 1/10/16.
- */
-
 var pjson = require('../package.json');
 var version = pjson.version || 'development';
 
