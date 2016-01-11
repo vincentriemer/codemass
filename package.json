@@ -3,9 +3,11 @@
   "description": "Command-line tool to bring visibilty to changes in your artifact's filesize.",
   "main": "dist/index.js",
   "scripts": {
+    "clean": "rimraf dist/*",
     "test": "echo \"No tests yet :(\" ",
-    "build": "babel ./src --out-dir ./dist",
     "chmod": "node scripts/cli-permissions.js",
+    "prebuild": "npm run clean", 
+    "build": "babel ./src --out-dir ./dist",
     "postbuild": "npm run chmod && npm run commit:artifacts",
     "commit": "git-cz",
     "commit:artifacts": "git add dist",

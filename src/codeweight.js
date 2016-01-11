@@ -80,11 +80,9 @@ function processFile (branch) {
       const branchGzipContent = await promisedGzip(branchContent);
 
       const [fsBytes, branchBytes] = calculateBytes([fsGzipContent, branchGzipContent]);
-
       return { name: `${name} (gizpped)`, fsBytes, branchBytes };
     } else {
       const [fsBytes, branchBytes] = calculateBytes([fsContent, branchContent]);
-
       return {name, fsBytes, branchBytes};
     }
   }
