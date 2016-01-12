@@ -6,7 +6,7 @@ import SimpleGit from 'simple-git';
 import Promise from 'bluebird';
 import filesize from 'filesize';
 import Table from 'cli-table';
-import { grey, green, red, cyan } from 'colors';
+import { grey, green, red, cyan, yellow } from 'colors';
 
 import { throwError } from './utilities';
 
@@ -25,10 +25,12 @@ const tableConfig = {
   head: ['File', 'Size', 'Percent', 'Diff'],
   style: {
     head: ['magenta'],
-    'padding-left': 0,
-    'padding-right': 5
+    'padding-left': 3,
+    'padding-right': 0
   }
 };
+
+const defaultTarget = 'HEAD';
 
 function fileSizeWrapper(bytes) {
   return filesize(bytes, { base: 10 });
@@ -88,16 +90,28 @@ function processFile (target) {
   }
 }
 
-function printResults(results) {
-  let outputTable = new Table(tableConfig);
-  outputTable.push(...results);
-  console.log(outputTable.toString());
+function printResults(target) {
+  return results => {
+    let outputTable = new Table(tableConfig);
+    outputTable.push(...results);
+
+    console.log(
+`
+Size differences since ${yellow(target)}
+
+${outputTable.toString()}
+`
+    );
+  }
 }
 
-export async function processFiles({ files, target = 'HEAD'}) {
-  return await Promise.map(files, processFile(target)).catch(throwError);
+export async function processFiles({ files, target = defaultTarget}) {
+  return await Promise.map(files, processFile(target))
+    .catch(throwError);
 }
 
-export async function printToConsole(processedFiles) {
-  await Promise.map(processedFiles, serializeResult).then(printResults).catch(throwError);
+export async function printToConsole(processedFiles, target = defaultTarget) {
+  await Promise.map(processedFiles, serializeResult)
+    .then(printResults(target))
+    .catch(throwError);
 }

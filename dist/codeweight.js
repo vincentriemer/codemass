@@ -64,10 +64,12 @@ var tableConfig = {
   head: ['File', 'Size', 'Percent', 'Diff'],
   style: {
     head: ['magenta'],
-    'padding-left': 0,
-    'padding-right': 5
+    'padding-left': 3,
+    'padding-right': 0
   }
 };
+
+var defaultTarget = 'HEAD';
 
 function fileSizeWrapper(bytes) {
   return (0, _filesize2.default)(bytes, { base: 10 });
@@ -178,17 +180,20 @@ function processFile(target) {
   }();
 }
 
-function printResults(results) {
-  var outputTable = new _cliTable2.default(tableConfig);
-  outputTable.push.apply(outputTable, (0, _toConsumableArray3.default)(results));
-  console.log(outputTable.toString());
+function printResults(target) {
+  return function (results) {
+    var outputTable = new _cliTable2.default(tableConfig);
+    outputTable.push.apply(outputTable, (0, _toConsumableArray3.default)(results));
+
+    console.log('\nSize differences since ' + (0, _colors.yellow)(target) + '\n\n' + outputTable.toString() + '\n');
+  };
 }
 
 var processFiles = exports.processFiles = function () {
   var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref3) {
     var files = _ref3.files;
     var _ref3$target = _ref3.target;
-    var target = _ref3$target === undefined ? 'HEAD' : _ref3$target;
+    var target = _ref3$target === undefined ? defaultTarget : _ref3$target;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -213,12 +218,13 @@ var processFiles = exports.processFiles = function () {
 
 var printToConsole = exports.printToConsole = function () {
   var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(processedFiles) {
+    var target = arguments.length <= 1 || arguments[1] === undefined ? defaultTarget : arguments[1];
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return _bluebird2.default.map(processedFiles, serializeResult).then(printResults).catch(_utilities.throwError);
+            return _bluebird2.default.map(processedFiles, serializeResult).then(printResults(target)).catch(_utilities.throwError);
 
           case 2:
           case 'end':
@@ -227,7 +233,7 @@ var printToConsole = exports.printToConsole = function () {
       }
     }, _callee3, this);
   }));
-  return function printToConsole(_x3) {
+  return function printToConsole(_x4) {
     return ref.apply(this, arguments);
   };
 }();

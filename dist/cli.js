@@ -30,4 +30,4 @@ if (config == null) {
   process.exit(1);
 }
 
-(0, _codeweight.printToConsole)((0, _codeweight.processFiles)(config));
+(0, _codeweight.printToConsole)((0, _codeweight.processFiles)(config), config.target);

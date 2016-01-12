@@ -25,4 +25,4 @@ if (config == null) {
   process.exit(1);
 }
 
-printToConsole(processFiles(config));
+printToConsole(processFiles(config), config.target);

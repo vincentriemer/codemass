@@ -62,6 +62,7 @@
       "commit-msg": "validate-commit-msg"
     },
     "checksize": {
+      "target": "master",
       "files": [
         {
           "path": "package.json"
