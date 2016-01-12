@@ -106,7 +106,7 @@ function calculateBytes(contentsArray) {
   return contentsArray.map(Buffer.byteLength);
 }
 
-function processFile(branch) {
+function processFile(target) {
   return function () {
     var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
       var path = _ref2.path;
@@ -132,7 +132,7 @@ function processFile(branch) {
             case 5:
               fsContent = _context.sent;
               _context.next = 8;
-              return promisedShow([branch + ':' + path]);
+              return promisedShow([target + ':' + path]);
 
             case 8:
               branchContent = _context.sent;
@@ -187,14 +187,14 @@ function printResults(results) {
 var processFiles = exports.processFiles = function () {
   var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref3) {
     var files = _ref3.files;
-    var _ref3$branch = _ref3.branch;
-    var branch = _ref3$branch === undefined ? 'master' : _ref3$branch;
+    var _ref3$target = _ref3.target;
+    var target = _ref3$target === undefined ? 'HEAD' : _ref3$target;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return _bluebird2.default.map(files, processFile(branch)).catch(_utilities.throwError);
+            return _bluebird2.default.map(files, processFile(target)).catch(_utilities.throwError);
 
           case 2:
             return _context2.abrupt('return', _context2.sent);

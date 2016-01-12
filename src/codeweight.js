@@ -63,7 +63,7 @@ function calculateBytes(contentsArray) {
   return contentsArray.map(Buffer.byteLength);
 }
 
-function processFile (branch) {
+function processFile (target) {
   return async function({path, gzip = false, name = path}) {
     // get git toplevel
     const topLevel = await promisedRevParse(['--show-toplevel']);
@@ -72,7 +72,7 @@ function processFile (branch) {
     const fsContent = await promisedReadFile(join(topLevel.trim(), path));
 
     // get the git master file size
-    const branchContent = await promisedShow([`${branch}:${path}`]);
+    const branchContent = await promisedShow([`${target}:${path}`]);
 
     if (gzip) {
       // gzip contents
@@ -94,8 +94,8 @@ function printResults(results) {
   console.log(outputTable.toString());
 }
 
-export async function processFiles({ files, branch = 'master'}) {
-  return await Promise.map(files, processFile(branch)).catch(throwError);
+export async function processFiles({ files, target = 'HEAD'}) {
+  return await Promise.map(files, processFile(target)).catch(throwError);
 }
 
 export async function printToConsole(processedFiles) {
