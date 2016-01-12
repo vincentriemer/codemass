@@ -35,17 +35,15 @@ var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _filesize = require('filesize');
-
-var _filesize2 = _interopRequireDefault(_filesize);
-
 var _cliTable = require('cli-table');
 
 var _cliTable2 = _interopRequireDefault(_cliTable);
 
 var _colors = require('colors');
 
-var _utilities = require('./utilities');
+var _serialize = require('./serialize');
+
+var _serialize2 = _interopRequireDefault(_serialize);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71,51 +69,18 @@ var tableConfig = {
 
 var defaultTarget = 'HEAD';
 
-function fileSizeWrapper(bytes) {
-  return (0, _filesize2.default)(bytes, { base: 10 });
-}
-
-function sizePercent(fsBytes, gitBytes) {
-  var percent = Math.floor(10000 * (1 - gitBytes / fsBytes)) / 100;
-  var prefix = percent > 0 ? '+' : '';
-  return (0, _colors.grey)('' + prefix + percent + '%');
-}
-
-function sizeDiff(fsBytes, gitBytes) {
-  var diff = fsBytes - gitBytes;
-  if (diff === 0) {
-    return '' + fileSizeWrapper(diff);
-  } else if (diff < 0) {
-    return '' + (0, _colors.green)(fileSizeWrapper(diff));
-  } else {
-    return '' + (0, _colors.red)('+' + fileSizeWrapper(diff));
-  }
-}
-
-function sizeRaw(fsBytes) {
-  return (0, _colors.cyan)(fileSizeWrapper(fsBytes));
-}
-
-function serializeResult(_ref) {
-  var name = _ref.name;
-  var fsBytes = _ref.fsBytes;
-  var branchBytes = _ref.branchBytes;
-
-  return [name, sizeRaw(fsBytes), sizePercent(fsBytes, branchBytes), sizeDiff(fsBytes, branchBytes)];
-}
-
 function calculateBytes(contentsArray) {
   return contentsArray.map(Buffer.byteLength);
 }
 
 function processFile(target) {
   return function () {
-    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
-      var path = _ref2.path;
-      var _ref2$gzip = _ref2.gzip;
-      var gzip = _ref2$gzip === undefined ? false : _ref2$gzip;
-      var _ref2$name = _ref2.name;
-      var name = _ref2$name === undefined ? path : _ref2$name;
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref) {
+      var path = _ref.path;
+      var _ref$gzip = _ref.gzip;
+      var gzip = _ref$gzip === undefined ? false : _ref$gzip;
+      var _ref$name = _ref.name;
+      var name = _ref$name === undefined ? path : _ref$name;
 
       var topLevel, fsContent, branchContent, fsGzipContent, branchGzipContent, _calculateBytes, _calculateBytes2, fsBytes, branchBytes, _calculateBytes3, _calculateBytes4;
 
@@ -185,31 +150,39 @@ function printResults(target) {
     var outputTable = new _cliTable2.default(tableConfig);
     outputTable.push.apply(outputTable, (0, _toConsumableArray3.default)(results));
 
-    console.log('\nSize differences since ' + (0, _colors.yellow)(target) + '\n\n' + outputTable.toString() + '\n');
+    console.log('\nSize differences since ' + (0, _colors.yellow)(target) + '\n\n' + outputTable.toString() + '\n    ');
   };
 }
 
 var processFiles = exports.processFiles = function () {
-  var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref3) {
-    var files = _ref3.files;
-    var _ref3$target = _ref3.target;
-    var target = _ref3$target === undefined ? defaultTarget : _ref3$target;
+  var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2) {
+    var files = _ref2.files;
+    var _ref2$target = _ref2.target;
+    var target = _ref2$target === undefined ? defaultTarget : _ref2$target;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
-            return _bluebird2.default.map(files, processFile(target)).catch(_utilities.throwError);
-
-          case 2:
-            return _context2.abrupt('return', _context2.sent);
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _bluebird2.default.map(files, processFile(target));
 
           case 3:
+            return _context2.abrupt('return', _context2.sent);
+
+          case 6:
+            _context2.prev = 6;
+            _context2.t0 = _context2['catch'](0);
+
+            // TODO: Write better errors
+            console.error(_context2.t0.stack);
+
+          case 9:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this);
+    }, _callee2, this, [[0, 6]]);
   }));
   return function processFiles(_x2) {
     return ref.apply(this, arguments);
@@ -219,19 +192,35 @@ var processFiles = exports.processFiles = function () {
 var printToConsole = exports.printToConsole = function () {
   var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(processedFiles) {
     var target = arguments.length <= 1 || arguments[1] === undefined ? defaultTarget : arguments[1];
+    var serializedResult;
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.next = 2;
-            return _bluebird2.default.map(processedFiles, serializeResult).then(printResults(target)).catch(_utilities.throwError);
+            _context3.prev = 0;
+            _context3.next = 3;
+            return _bluebird2.default.map(processedFiles, _serialize2.default);
 
-          case 2:
+          case 3:
+            serializedResult = _context3.sent;
+
+            printResults(target)(serializedResult);
+            _context3.next = 10;
+            break;
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3['catch'](0);
+
+            // TODO: Write better errors
+            console.error(_context3.t0.stack);
+
+          case 10:
           case 'end':
             return _context3.stop();
         }
       }
-    }, _callee3, this);
+    }, _callee3, this, [[0, 7]]);
   }));
   return function printToConsole(_x4) {
     return ref.apply(this, arguments);

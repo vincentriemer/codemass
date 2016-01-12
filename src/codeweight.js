@@ -4,11 +4,10 @@ import { join } from 'path';
 
 import SimpleGit from 'simple-git';
 import Promise from 'bluebird';
-import filesize from 'filesize';
 import Table from 'cli-table';
-import { grey, green, red, cyan, yellow } from 'colors';
+import { yellow } from 'colors';
 
-import { throwError } from './utilities';
+import serialize from './serialize';
 
 const git = SimpleGit();
 
@@ -31,35 +30,6 @@ const tableConfig = {
 };
 
 const defaultTarget = 'HEAD';
-
-function fileSizeWrapper(bytes) {
-  return filesize(bytes, { base: 10 });
-}
-
-function sizePercent(fsBytes, gitBytes) {
-  const percent = Math.floor(10000 * (1 - (gitBytes / fsBytes))) / 100;
-  const prefix = percent > 0 ? '+' : '';
-  return grey(`${prefix}${percent}%`);
-}
-
-function sizeDiff(fsBytes, gitBytes) {
-  const diff = fsBytes - gitBytes;
-  if (diff === 0) {
-    return `${fileSizeWrapper(diff)}`;
-  } else if (diff < 0) {
-    return `${green(fileSizeWrapper(diff))}`;
-  } else {
-    return `${red('+' + fileSizeWrapper(diff))}`
-  }
-}
-
-function sizeRaw(fsBytes) {
-  return cyan(fileSizeWrapper(fsBytes));
-}
-
-function serializeResult({name, fsBytes, branchBytes}) {
-  return [name, sizeRaw(fsBytes), sizePercent(fsBytes, branchBytes), sizeDiff(fsBytes, branchBytes)];
-}
 
 function calculateBytes(contentsArray) {
   return contentsArray.map(Buffer.byteLength);
@@ -95,23 +65,29 @@ function printResults(target) {
     let outputTable = new Table(tableConfig);
     outputTable.push(...results);
 
-    console.log(
-`
+    console.log(`
 Size differences since ${yellow(target)}
 
 ${outputTable.toString()}
-`
-    );
+    `);
   }
 }
 
 export async function processFiles({ files, target = defaultTarget}) {
-  return await Promise.map(files, processFile(target))
-    .catch(throwError);
+  try {
+    return await Promise.map(files, processFile(target));
+  } catch (err) {
+    // TODO: Write better errors
+    console.error(err.stack);
+  }
 }
 
 export async function printToConsole(processedFiles, target = defaultTarget) {
-  await Promise.map(processedFiles, serializeResult)
-    .then(printResults(target))
-    .catch(throwError);
+  try {
+    const serializedResult = await Promise.map(processedFiles, serialize);
+    printResults(target)(serializedResult);
+  } catch (err) {
+    // TODO: Write better errors
+    console.error(err.stack);
+  }
 }
