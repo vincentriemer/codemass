@@ -6,7 +6,7 @@
     "clean": "rimraf dist/*",
     "test": "echo \"No tests yet :(\" ",
     "chmod": "node scripts/cli-permissions.js",
-    "prebuild": "npm run clean", 
+    "prebuild": "npm run clean",
     "build": "babel ./src --out-dir ./dist",
     "postbuild": "npm run chmod && npm run commit:artifacts",
     "commit": "git-cz",
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/vincentriemer/codeweight#readme",
   "devDependencies": {
     "babel-cli": "^6.4.0",
-    "babel-plugin-transform-runtime": "^6.4.0",
+    "babel-plugin-transform-runtime": "^6.4.3",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "chmod": "^0.2.1",
