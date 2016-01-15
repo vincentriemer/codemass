@@ -6,7 +6,7 @@
     "clean": "rimraf dist/*",
     "test": "echo \"No tests yet :(\" ",
     "chmod": "node scripts/cli-permissions.js",
-    "prebuild": "npm run clean", 
+    "prebuild": "npm run clean",
     "build": "babel ./src --out-dir ./dist",
     "postbuild": "npm run chmod && npm run commit:artifacts",
     "commit": "git-cz",
@@ -34,7 +34,7 @@
     "ghooks": "^1.0.3",
     "rimraf": "^2.5.0",
     "semantic-release": "^4.3.5",
-    "validate-commit-msg": "^1.0.0"
+    "validate-commit-msg": "^1.1.0"
   },
   "dependencies": {
     "bluebird": "^3.1.1",
