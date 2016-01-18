@@ -1,6 +1,4 @@
 import test from 'tape';
-import sinon from 'sinon';
-import { rewireFileAccess } from './testutils';
 import { cyan, grey, green, red } from 'colors/safe';
 
 import serialize from '../src/serialize';

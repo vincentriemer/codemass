@@ -1,8 +1,7 @@
 import test from 'tape';
-import sinon from 'sinon';
 import { rewireFileAccess } from './testutils';
 
-import { processFiles, printToConsole, __RewireAPI__ as CodeweightRewireAPI } from '../src/codeweight';
+import { processFiles, __RewireAPI__ as CodeweightRewireAPI } from '../src/codeweight';
 
 test('processFiles file content reading', async assert => {
   const { rewireReset } = rewireFileAccess(CodeweightRewireAPI);

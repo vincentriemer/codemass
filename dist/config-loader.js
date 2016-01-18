@@ -21,29 +21,15 @@ var _stripJsonComments = require('strip-json-comments');
 
 var stripJSONComments = _interopRequireWildcard(_stripJsonComments);
 
-var _jsonlint = require('jsonlint');
-
 var _glob = require('glob');
 
 var glob = _interopRequireWildcard(_glob);
-
-var _resolve = require('resolve');
-
-var resolve = _interopRequireWildcard(_resolve);
-
-var _stripBom = require('strip-bom');
-
-var stripBOM = _interopRequireWildcard(_stripBom);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Configuration sources in priority order.
-var configs = ['package.json', '.codeweight', '.codeweight.json'];
-
-// Before, "findup-sync" package was used,
-// but it does not provide filter callback
 // inspired by https://github.com/commitizen/cz-cli/blob/master/src/configLoader/loader.js
 
 /**
@@ -74,6 +60,10 @@ var configs = ['package.json', '.codeweight', '.codeweight.json'];
 /**
  * Command line config helpers
  */
+var configs = ['package.json', '.codeweight', '.codeweight.json'];
+
+// Before, "findup-sync" package was used,
+// but it does not provide filter callback
 function findup(patterns, options, fn) {
   /* jshint -W083 */
 

@@ -32,10 +32,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import * as stripJSONComments from 'strip-json-comments';
-import { parseJson } from 'jsonlint';
 import * as glob from 'glob';
-import * as resolve from 'resolve';
-import * as stripBOM from 'strip-bom';
 
 // Configuration sources in priority order.
 var configs = ['package.json', '.codeweight', '.codeweight.json'];

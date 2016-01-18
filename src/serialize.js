@@ -1,5 +1,5 @@
 import filesize from 'filesize';
-import { grey, green, red, cyan, yellow } from 'colors/safe';
+import { grey, green, red, cyan } from 'colors/safe';
 
 function fileSizeWrapper(bytes) {
   return filesize(bytes, { base: 10 });

@@ -8,7 +8,6 @@ import Table from 'cli-table';
 import { yellow } from 'colors/safe';
 
 import serialize from './serialize';
-import { throwError } from './utils';
 
 const git = SimpleGit();
 

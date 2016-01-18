@@ -41,8 +41,6 @@ var _serialize = require('./serialize');
 
 var _serialize2 = _interopRequireDefault(_serialize);
 
-var _utils = require('./utils');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var git = (0, _simpleGit2.default)();

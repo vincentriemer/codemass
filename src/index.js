@@ -1,8 +1,12 @@
 import configLoader from './config-loader';
-import { getSize, processFiles, printToConsole } from './codeweight';
+import { processFiles, printToConsole } from './codeweight';
 
-module.exports = {
-  getSize,
-  processFiles,
-  printToConsole
+module.exports = async function(configPath) {
+  const config = configLoader(configPath);
+
+  if (config == null) {
+    throw new Error('Could not find checksize config');
+  }
+
+  printToConsole(await processFiles(config), config.rev);
 };
