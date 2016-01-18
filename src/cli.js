@@ -25,4 +25,7 @@ if (config == null) {
   process.exit(1);
 }
 
-printToConsole(processFiles(config), config.target);
+(async () => {
+  printToConsole(await processFiles(config), config.rev);
+})();
+
