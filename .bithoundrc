@@ -3,7 +3,7 @@
     "dist/**",
     "coverage/**",
     "**/node_modules/**",
-    "scripts/**",
+    "scripts/**"
   ],
   "test": [
     "test/*.spec.js"
