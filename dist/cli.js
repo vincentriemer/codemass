@@ -26,14 +26,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var pjson = require('../package.json');
 var version = pjson.version || 'development';
 
-_commander2.default.version(version).option('-c, --config', 'set config path. defaults to seaching in package.json, .checksize, .checksize.json.').parse(process.argv);
+_commander2.default.version(version).option('-c, --config', 'set config path. defaults to seaching in package.json, .codeweight, .codeweight.json.').parse(process.argv);
 
 var configPath = _commander2.default.config;
 
 var config = (0, _configLoader2.default)(configPath);
 
 if (config == null) {
-  console.error((0, _safe.red)('ERROR: Could not find checksize config. See below for usage.'));
+  console.error((0, _safe.red)('ERROR: Could not find codeweight config. See below for usage.'));
   _commander2.default.outputHelp(_safe.yellow);
   process.exit(1);
 }

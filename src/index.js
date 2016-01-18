@@ -5,7 +5,7 @@ module.exports = async function(configPath) {
   const config = configLoader(configPath);
 
   if (config == null) {
-    throw new Error('Could not find checksize config');
+    throw new Error('Could not find codeweight config');
   }
 
   printToConsole(await processFiles(config), config.rev);

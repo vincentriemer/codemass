@@ -30,7 +30,7 @@ module.exports = function () {
               break;
             }
 
-            throw new Error('Could not find checksize config');
+            throw new Error('Could not find codeweight config');
 
           case 3:
             _context.next = 5;
