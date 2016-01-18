@@ -5,14 +5,14 @@ function fileSizeWrapper(bytes) {
   return filesize(bytes, { base: 10 });
 }
 
-function sizePercent(fsBytes, refBytes) {
-  const percent = Math.floor(10000 * (1 - (refBytes / fsBytes))) / 100;
+function sizePercent(fsBytes, revBytes) {
+  const percent = Math.floor(10000 * (1 - (revBytes / fsBytes))) / 100;
   const prefix = percent > 0 ? '+' : '';
   return grey(`${prefix}${percent}%`);
 }
 
-function sizeDiff(fsBytes, refBytes) {
-  const diff = fsBytes - refBytes;
+function sizeDiff(fsBytes, revBytes) {
+  const diff = fsBytes - revBytes;
   if (diff === 0) {
     return `${fileSizeWrapper(diff)}`;
   } else if (diff < 0) {
@@ -26,11 +26,11 @@ function sizeRaw(fsBytes) {
   return cyan(fileSizeWrapper(fsBytes));
 }
 
-export default function serialize({name, fsBytes, refBytes}) {
+export default function serialize({name, fsBytes, revBytes}) {
   return [
     name,
     sizeRaw(fsBytes),
-    sizePercent(fsBytes, refBytes),
-    sizeDiff(fsBytes, refBytes)
+    sizePercent(fsBytes, revBytes),
+    sizeDiff(fsBytes, revBytes)
   ];
 }

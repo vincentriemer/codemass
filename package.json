@@ -79,7 +79,7 @@
       "commit-msg": "validate-commit-msg"
     },
     "codeweight": {
-      "target": "master",
+      "rev": "master",
       "files": [
         {
           "path": "package.json"

@@ -30,19 +30,19 @@ const tableConfig = {
   }
 };
 
-const defaultRef = 'HEAD';
+const defaultRev = 'HEAD';
 
-export async function getSize(path, gzip = false, ref = null) {
+export async function getSize(path, gzip = false, rev = null) {
   let content = null;
 
   // get size from local filesystem
-  if (ref == null) {
+  if (rev == null) {
     const topLevel = await promisedRevParse(['--show-toplevel']);
     content = await promisedReadFile(join(topLevel.trim(), path));
   }
   // get size from git reference
   else {
-    content = await promisedShow([`${ref}:${path}`]);
+    content = await promisedShow([`${rev}:${path}`]);
   }
 
   // gzip content if flag is set
@@ -53,20 +53,20 @@ export async function getSize(path, gzip = false, ref = null) {
   return Buffer.byteLength(content);
 }
 
-function printResults (ref) {
+function printResults (rev) {
   return results => {
     let outputTable = new Table(tableConfig);
     outputTable.push(...results);
 
     console.log(`
-Size differences since ${yellow(ref)}
+Size differences since ${yellow(rev)}
 
 ${outputTable.toString()}
     `);
   }
 }
 
-function processFile (ref) {
+function processFile (rev) {
   return async function ({path, gzip = false, name = path}) {
     let outputName = name;
 
@@ -77,24 +77,24 @@ function processFile (ref) {
     return {
       name: outputName,
       fsBytes: await getSize(path, gzip),
-      branchBytes: await getSize(path, gzip, ref)
+      revBytes: await getSize(path, gzip, rev)
     };
   }
 }
 
-export async function processFiles ({ files = throwError('no files property defined'), ref = defaultRef}) {
+export async function processFiles ({ files, rev = defaultRev }) {
   try {
-    return await Promise.map(files, processFile(ref));
+    return await Promise.map(files, processFile(rev));
   } catch (err) {
     // TODO: Write better errors
     console.error(err.stack);
   }
 }
 
-export async function printToConsole (processedFiles = throwError('processedFiles is not defined'), ref = defaultRef) {
+export async function printToConsole (processedFiles, rev = defaultRev) {
   try {
-    const serializedResult = await Promise.map(processedFiles, serialize);
-    printResults(ref)(serializedResult);
+    const serializedResult = processedFiles.map(serialize);
+    printResults(rev)(serializedResult);
   } catch (err) {
     // TODO: Write better errors
     console.error(err.stack);

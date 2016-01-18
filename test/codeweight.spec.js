@@ -8,7 +8,7 @@ test('processFiles file content reading', async assert => {
   const { rewireReset } = rewireFileAccess(CodeweightRewireAPI);
 
   const actual = await processFiles({ files: [{ path: 'package.json' }] });
-  const expected = [{name: 'package.json', fsBytes: 1549, branchBytes: 1239}];
+  const expected = [{name: 'package.json', fsBytes: 1549, revBytes: 1239}];
   assert.deepEqual(actual, expected,
     'should read the same file on both the filesystem and git reference.');
 
@@ -20,19 +20,19 @@ test('processFiles file\'s gzip option', async assert => {
   const { rewireReset } = rewireFileAccess(CodeweightRewireAPI);
 
   const actual1 = await processFiles({ files: [{ path: 'package.json' }] });
-  const expected1 = [{name: 'package.json', fsBytes: 1549, branchBytes: 1239}];
+  const expected1 = [{name: 'package.json', fsBytes: 1549, revBytes: 1239}];
   assert.deepEqual(actual1, expected1,
     'should default to false if not provided.');
 
   const actual2 = await processFiles({ files: [{ path: 'package.json', gzip: true }] });
-  const expected2 = [{name: 'package.json (gzipped)', fsBytes: 65, branchBytes: 69}];
+  const expected2 = [{name: 'package.json (gzipped)', fsBytes: 65, revBytes: 69}];
   assert.deepEqual(actual2, expected2);
 
   rewireReset();
   assert.end();
 });
 
-test('processFiles target option', async assert => {
+test('processFiles ref option', async assert => {
   const { rewireReset, showStub } = rewireFileAccess(CodeweightRewireAPI);
 
   await processFiles({ files: [{ path: 'package.json' }] });
@@ -43,7 +43,7 @@ test('processFiles target option', async assert => {
     'should default to "HEAD" if not provided.');
   showStub.reset();
 
-  await processFiles({ files: [{ path: 'package.json' }], target: 'master' });
+  await processFiles({ files: [{ path: 'package.json' }], rev: 'master' });
 
   const actual2 = showStub.firstCall.args[0][0];
   const expected2 = 'master:package.json';
