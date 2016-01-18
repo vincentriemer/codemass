@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _commander = require('commander');
 
 var _commander2 = _interopRequireDefault(_commander);
@@ -30,4 +38,23 @@ if (config == null) {
   process.exit(1);
 }
 
-(0, _codeweight.printToConsole)((0, _codeweight.processFiles)(config), config.target);
+(0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+  return _regenerator2.default.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return (0, _codeweight.processFiles)(config);
+
+        case 2:
+          _context.t0 = _context.sent;
+          _context.t1 = config.rev;
+          (0, _codeweight.printToConsole)(_context.t0, _context.t1);
+
+        case 5:
+        case 'end':
+          return _context.stop();
+      }
+    }
+  }, _callee, undefined);
+}))();

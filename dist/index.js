@@ -6,16 +6,10 @@ var _configLoader2 = _interopRequireDefault(_configLoader);
 
 var _codeweight = require('./codeweight');
 
-var _codeweight2 = _interopRequireDefault(_codeweight);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = function (configPath) {
-  var config = (0, _configLoader2.default)(configPath);
-
-  if (config == null) {
-    throw new Error('Could not find checksize config');
-  }
-
-  (0, _codeweight2.default)(config);
+module.exports = {
+  getSize: _codeweight.getSize,
+  processFiles: _codeweight.processFiles,
+  printToConsole: _codeweight.printToConsole
 };

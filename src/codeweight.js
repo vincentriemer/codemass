@@ -5,9 +5,10 @@ import { join } from 'path';
 import SimpleGit from 'simple-git';
 import Promise from 'bluebird';
 import Table from 'cli-table';
-import { yellow } from 'colors';
+import { yellow } from 'colors/safe';
 
 import serialize from './serialize';
+import { throwError } from './utils';
 
 const git = SimpleGit();
 
@@ -29,63 +30,71 @@ const tableConfig = {
   }
 };
 
-const defaultTarget = 'HEAD';
+const defaultRef = 'HEAD';
 
-function calculateBytes(contentsArray) {
-  return contentsArray.map(Buffer.byteLength);
-}
+export async function getSize(path, gzip = false, ref = null) {
+  let content = null;
 
-function processFile (target) {
-  return async function({path, gzip = false, name = path}) {
-    // get git toplevel
+  // get size from local filesystem
+  if (ref == null) {
     const topLevel = await promisedRevParse(['--show-toplevel']);
-
-    // get the local file size
-    const fsContent = await promisedReadFile(join(topLevel.trim(), path));
-
-    // get the git master file size
-    const branchContent = await promisedShow([`${target}:${path}`]);
-
-    if (gzip) {
-      // gzip contents
-      const fsGzipContent = await promisedGzip(fsContent);
-      const branchGzipContent = await promisedGzip(branchContent);
-
-      const [fsBytes, branchBytes] = calculateBytes([fsGzipContent, branchGzipContent]);
-      return { name: `${name} (gizpped)`, fsBytes, branchBytes };
-    } else {
-      const [fsBytes, branchBytes] = calculateBytes([fsContent, branchContent]);
-      return {name, fsBytes, branchBytes};
-    }
+    content = await promisedReadFile(join(topLevel.trim(), path));
   }
+  // get size from git reference
+  else {
+    content = await promisedShow([`${ref}:${path}`]);
+  }
+
+  // gzip content if flag is set
+  if (gzip) {
+    content = await promisedGzip(content);
+  }
+
+  return Buffer.byteLength(content);
 }
 
-function printResults(target) {
+function printResults (ref) {
   return results => {
     let outputTable = new Table(tableConfig);
     outputTable.push(...results);
 
     console.log(`
-Size differences since ${yellow(target)}
+Size differences since ${yellow(ref)}
 
 ${outputTable.toString()}
     `);
   }
 }
 
-export async function processFiles({ files, target = defaultTarget}) {
+function processFile (ref) {
+  return async function ({path, gzip = false, name = path}) {
+    let outputName = name;
+
+    if (gzip) {
+      outputName += ' (gzipped)';
+    }
+
+    return {
+      name: outputName,
+      fsBytes: await getSize(path, gzip),
+      branchBytes: await getSize(path, gzip, ref)
+    };
+  }
+}
+
+export async function processFiles ({ files = throwError('no files property defined'), ref = defaultRef}) {
   try {
-    return await Promise.map(files, processFile(target));
+    return await Promise.map(files, processFile(ref));
   } catch (err) {
     // TODO: Write better errors
     console.error(err.stack);
   }
 }
 
-export async function printToConsole(processedFiles, target = defaultTarget) {
+export async function printToConsole (processedFiles = throwError('processedFiles is not defined'), ref = defaultRef) {
   try {
     const serializedResult = await Promise.map(processedFiles, serialize);
-    printResults(target)(serializedResult);
+    printResults(ref)(serializedResult);
   } catch (err) {
     // TODO: Write better errors
     console.error(err.stack);

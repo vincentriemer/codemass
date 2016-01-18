@@ -40,7 +40,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Configuration sources in priority order.
-var configs = ['package.json', '.checksize', '.checksize.json'];
+var configs = ['package.json', '.codeweight', '.codeweight.json'];
 
 // Before, "findup-sync" package was used,
 // but it does not provide filter callback
@@ -108,8 +108,8 @@ function getNormalizedConfig(config, content) {
     // PACKAGE.JSON
 
     // use npm config key
-    if (content.config && content.config.checksize) {
-      return content.config.checksize;
+    if (content.config && content.config.codeweight) {
+      return content.config.codeweight;
     }
   } else {
     // .checksize or .checksize.json
