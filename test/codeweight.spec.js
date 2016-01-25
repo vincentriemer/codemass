@@ -1,5 +1,5 @@
 import test from 'tape';
-import { rewireFileAccess } from './testutils';
+import { rewireFileAccess, rewireGzip } from './testutils';
 
 import { processFiles, __RewireAPI__ as CodeweightRewireAPI } from '../src/codeweight';
 
@@ -17,6 +17,7 @@ test('processFiles file content reading', async assert => {
 
 test('processFiles file\'s gzip option', async assert => {
   const { rewireReset } = rewireFileAccess(CodeweightRewireAPI);
+  const gzipRewire = rewireGzip(CodeweightRewireAPI);
 
   const actual1 = await processFiles({ files: [{ path: 'package.json' }] });
   const expected1 = [{name: 'package.json', fsBytes: 1549, revBytes: 1239}];
@@ -24,10 +25,11 @@ test('processFiles file\'s gzip option', async assert => {
     'should default to false if not provided.');
 
   const actual2 = await processFiles({ files: [{ path: 'package.json', gzip: true }] });
-  const expected2 = [{name: 'package.json (gzipped)', fsBytes: 65, revBytes: 69}];
+  const expected2 = [{name: 'package.json (gzipped)', fsBytes: 61, revBytes: 61}];
   assert.deepEqual(actual2, expected2);
 
   rewireReset();
+  gzipRewire.reset();
   assert.end();
 });
 
