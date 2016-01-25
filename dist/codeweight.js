@@ -1,10 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.printToConsole = exports.processFiles = exports.getSize = undefined;
-
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
@@ -16,6 +11,11 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.printToConsole = exports.processFiles = exports.getSize = undefined;
 
 var _zlib = require('zlib');
 
