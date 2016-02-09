@@ -1,5 +1,10 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.printToConsole = exports.processFiles = exports.getSize = undefined;
+
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
@@ -11,59 +16,6 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.printToConsole = exports.processFiles = exports.getSize = undefined;
-
-var _zlib = require('zlib');
-
-var _fs = require('fs');
-
-var _path = require('path');
-
-var _simpleGit = require('simple-git');
-
-var _simpleGit2 = _interopRequireDefault(_simpleGit);
-
-var _bluebird = require('bluebird');
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
-
-var _cliTable = require('cli-table');
-
-var _cliTable2 = _interopRequireDefault(_cliTable);
-
-var _safe = require('colors/safe');
-
-var _serialize = require('./serialize');
-
-var _serialize2 = _interopRequireDefault(_serialize);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var git = (0, _simpleGit2.default)();
-
-var promisedShow = _bluebird2.default.promisify(git.show, { context: git });
-var promisedRevParse = _bluebird2.default.promisify(git.revparse, { context: git });
-var promisedReadFile = _bluebird2.default.promisify(_fs.readFile);
-var promisedGzip = _bluebird2.default.promisify(_zlib.gzip);
-
-var tableConfig = {
-  chars: { 'top': '', 'top-mid': '', 'top-left': '', 'top-right': '',
-    'bottom': '', 'bottom-mid': '', 'bottom-left': '', 'bottom-right': '',
-    'left': '', 'left-mid': '', 'mid': '', 'mid-mid': '',
-    'right': '', 'right-mid': '', 'middle': ' ' },
-  head: ['File', 'Size', 'Percent', 'Diff'],
-  style: {
-    head: ['magenta'],
-    'padding-left': 3,
-    'padding-right': 0
-  }
-};
-
-var defaultRev = 'HEAD';
 
 var getSize = exports.getSize = function () {
   var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(path) {
@@ -130,64 +82,6 @@ var getSize = exports.getSize = function () {
   };
 }();
 
-function printResults(rev) {
-  return function (results) {
-    var outputTable = new _cliTable2.default(tableConfig);
-    outputTable.push.apply(outputTable, (0, _toConsumableArray3.default)(results));
-
-    console.log('\nSize differences since ' + (0, _safe.yellow)(rev) + '\n\n' + outputTable.toString() + '\n    ');
-  };
-}
-
-function processFile(rev) {
-  return function () {
-    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref) {
-      var path = _ref.path;
-      var _ref$gzip = _ref.gzip;
-      var gzip = _ref$gzip === undefined ? false : _ref$gzip;
-      var _ref$name = _ref.name;
-      var name = _ref$name === undefined ? path : _ref$name;
-      var outputName;
-      return _regenerator2.default.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              outputName = name;
-
-              if (gzip) {
-                outputName += ' (gzipped)';
-              }
-
-              _context2.t0 = outputName;
-              _context2.next = 5;
-              return getSize(path, gzip);
-
-            case 5:
-              _context2.t1 = _context2.sent;
-              _context2.next = 8;
-              return getSize(path, gzip, rev);
-
-            case 8:
-              _context2.t2 = _context2.sent;
-              return _context2.abrupt('return', {
-                name: _context2.t0,
-                fsBytes: _context2.t1,
-                revBytes: _context2.t2
-              });
-
-            case 10:
-            case 'end':
-              return _context2.stop();
-          }
-        }
-      }, _callee2, this);
-    }));
-    return function (_x4) {
-      return ref.apply(this, arguments);
-    };
-  }();
-}
-
 var processFiles = exports.processFiles = function () {
   var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(_ref2) {
     var files = _ref2.files;
@@ -251,3 +145,110 @@ var printToConsole = exports.printToConsole = function () {
     return ref.apply(this, arguments);
   };
 }();
+
+var _zlib = require('zlib');
+
+var _fs = require('fs');
+
+var _path = require('path');
+
+var _simpleGit = require('simple-git');
+
+var _simpleGit2 = _interopRequireDefault(_simpleGit);
+
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
+var _cliTable = require('cli-table');
+
+var _cliTable2 = _interopRequireDefault(_cliTable);
+
+var _safe = require('colors/safe');
+
+var _serialize = require('./serialize');
+
+var _serialize2 = _interopRequireDefault(_serialize);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var git = (0, _simpleGit2.default)();
+
+var promisedShow = _bluebird2.default.promisify(git.show, { context: git });
+var promisedRevParse = _bluebird2.default.promisify(git.revparse, { context: git });
+var promisedReadFile = _bluebird2.default.promisify(_fs.readFile);
+var promisedGzip = _bluebird2.default.promisify(_zlib.gzip);
+
+var tableConfig = {
+  chars: { 'top': '', 'top-mid': '', 'top-left': '', 'top-right': '',
+    'bottom': '', 'bottom-mid': '', 'bottom-left': '', 'bottom-right': '',
+    'left': '', 'left-mid': '', 'mid': '', 'mid-mid': '',
+    'right': '', 'right-mid': '', 'middle': ' ' },
+  head: ['File', 'Size', 'Percent', 'Diff'],
+  style: {
+    head: ['magenta'],
+    'padding-left': 3,
+    'padding-right': 0
+  }
+};
+
+var defaultRev = 'HEAD';
+
+function printResults(rev) {
+  return function (results) {
+    var outputTable = new _cliTable2.default(tableConfig);
+    outputTable.push.apply(outputTable, (0, _toConsumableArray3.default)(results));
+
+    console.log('\nSize differences since ' + (0, _safe.yellow)(rev) + '\n\n' + outputTable.toString() + '\n    ');
+  };
+}
+
+function processFile(rev) {
+  return function () {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref) {
+      var path = _ref.path;
+      var _ref$gzip = _ref.gzip;
+      var gzip = _ref$gzip === undefined ? false : _ref$gzip;
+      var _ref$name = _ref.name;
+      var name = _ref$name === undefined ? path : _ref$name;
+      var outputName;
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              outputName = name;
+
+
+              if (gzip) {
+                outputName += ' (gzipped)';
+              }
+
+              _context2.t0 = outputName;
+              _context2.next = 5;
+              return getSize(path, gzip);
+
+            case 5:
+              _context2.t1 = _context2.sent;
+              _context2.next = 8;
+              return getSize(path, gzip, rev);
+
+            case 8:
+              _context2.t2 = _context2.sent;
+              return _context2.abrupt('return', {
+                name: _context2.t0,
+                fsBytes: _context2.t1,
+                revBytes: _context2.t2
+              });
+
+            case 10:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+    return function (_x4) {
+      return ref.apply(this, arguments);
+    };
+  }();
+}
