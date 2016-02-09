@@ -63,7 +63,7 @@
     "filesize": "3.2.1",
     "glob": "6.0.4",
     "simple-git": "1.22.0",
-    "strip-json-comments": "2.0.0"
+    "strip-json-comments": "2.0.1"
   },
   "bin": {
     "codeweight": "dist/cli.js"
