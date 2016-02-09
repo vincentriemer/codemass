@@ -30,6 +30,7 @@ _commander2.default.version(version).option('-c, --config', 'set config path. de
 
 var configPath = _commander2.default.config;
 
+
 var config = (0, _configLoader2.default)(configPath);
 
 if (config == null) {
