@@ -47,7 +47,7 @@
     "isparta": "4.0.0",
     "istanbul": "0.4.2",
     "lorem-ipsum": "1.0.3",
-    "rimraf": "2.5.1",
+    "rimraf": "2.5.2",
     "semantic-release": "4.3.5",
     "sinon": "1.17.3",
     "tap-prettify": "0.0.2",
