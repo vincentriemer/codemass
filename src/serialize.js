@@ -6,7 +6,8 @@ function fileSizeWrapper(bytes) {
 }
 
 function sizePercent(fsBytes, revBytes) {
-  const percent = Math.floor(10000 * (1 - (revBytes / fsBytes))) / 100;
+  // const percent = Math.floor(10000 * (1 - (revBytes / fsBytes))) / 100;
+  const percent = -1 * ((revBytes - fsBytes) / revBytes) * 100;
   const prefix = percent > 0 ? '+' : '';
   return grey(`${prefix}${percent}%`);
 }

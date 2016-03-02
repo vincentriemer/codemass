@@ -36,14 +36,14 @@ test('serialize percent diff output', assert => {
 
   assert.equal(actual1, expected1, 'should just return 0% with no prefix if there is no difference in size.');
 
-  const [,,actual2] = serialize({ name: 'package.json', fsBytes: 50, revBytes: 75 });
+  const [,,actual2] = serialize({ name: 'package.json', fsBytes: 50, revBytes: 100 });
   const expected2 = grey('-50%');
 
   assert.equal(actual2, expected2,
     'should return a negative percent when the fs size is less than the branch size.');
 
-  const [,,actual3] = serialize({ name: 'package.json', fsBytes: 100, revBytes: 50 });
-  const expected3 = grey('+50%');
+  const [,,actual3] = serialize({ name: 'package.json', fsBytes: 200, revBytes: 50 });
+  const expected3 = grey('+300%');
 
   assert.equal(actual3, expected3,
     'should return a positive percent (with "+" prefixed) when the fs size is greater than the branch size');
