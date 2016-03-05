@@ -61,7 +61,7 @@
     "colors": "1.1.2",
     "commander": "2.9.0",
     "filesize": "3.2.1",
-    "glob": "7.0.0",
+    "glob": "7.0.3",
     "simple-git": "1.23.0",
     "strip-json-comments": "2.0.1"
   },
