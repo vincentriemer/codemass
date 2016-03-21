@@ -62,7 +62,7 @@
     "commander": "2.9.0",
     "filesize": "3.2.1",
     "glob": "7.0.0",
-    "simple-git": "1.23.0",
+    "simple-git": "1.30.0",
     "strip-json-comments": "2.0.1"
   },
   "bin": {
