@@ -42,7 +42,7 @@
     "commitizen": "2.5.0",
     "covert": "1.1.0",
     "cz-conventional-changelog": "1.1.5",
-    "eslint": "1.10.3",
+    "eslint": "2.5.3",
     "ghooks": "1.0.3",
     "isparta": "4.0.0",
     "istanbul": "0.4.2",
